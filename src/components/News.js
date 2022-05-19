@@ -4,12 +4,6 @@ import Spinner from "./Spinner";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
 
-const aws = require("aws-sdk");
-
-let api = new aws.API({
-  api_key : process.env.API_KEY
-});
-
 export default function News(props) {
   News.propTypes = {
     country: PropTypes.string,
@@ -30,7 +24,7 @@ export default function News(props) {
 
   const updateNews = async () => {
     props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${api_key}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${process.env.API_KEY}&page=${page}&pageSize=${props.pageSize}`;
     let data = await fetch(url);
     props.setProgress(30);
     let parsedData = await data.json();
@@ -49,7 +43,7 @@ export default function News(props) {
   const fetchMoreData = async () => {
     const url = `https://newsapi.org/v2/top-headlines?country=${
       props.country
-    }&category=${props.category}&apiKey=${api_key}&page=${
+    }&category=${props.category}&apiKey=${process.env.API_KEY}&page=${
       page + 1
     }&pageSize=${props.pageSize}`;
     setPage(page + 1);

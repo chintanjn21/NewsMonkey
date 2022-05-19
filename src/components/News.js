@@ -13,8 +13,7 @@ export default function News(props) {
 
   News.defaultProps = {
     country: "in",
-    category: "top",
-    // category: 'general',
+    category: 'general',
     pagesize: 6,
   };
 
@@ -24,13 +23,13 @@ export default function News(props) {
 
   const updateNews = async () => {
     props.setProgress(10);
-    const url = `https://newsapi.org/v2/top-headlines?country=${props.country}&category=${props.category}&apiKey=${process.env.API_KEY}&page=${page}&pageSize=${props.pageSize}`;
+    const url = `http://api.mediastack.com/v1/news?access_key=${process.env.REACT_APP_API_KEY}&countries=${props.country}&categories=${props.category}&limit=${props.pageSize}&page=${page}&languages=en`;
     let data = await fetch(url);
     props.setProgress(30);
     let parsedData = await data.json();
     props.setProgress(70);
-    setArticle(parsedData.articles);
-    setTotalResults(parsedData.totalResults);
+    setArticle(parsedData.data);
+    setTotalResults(parsedData.total);
     props.setProgress(100);
   };
 
@@ -41,16 +40,12 @@ export default function News(props) {
   }, []);
 
   const fetchMoreData = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=${
-      props.country
-    }&category=${props.category}&apiKey=${process.env.API_KEY}&page=${
-      page + 1
-    }&pageSize=${props.pageSize}`;
+    const url = `http://api.mediastack.com/v1/news?access_key=${process.env.REACT_APP_API_KEY}&countries=${props.country}&categories=${props.category}&limit=${props.pageSize}&page=${page}&languages=en`;
     setPage(page + 1);
     let data = await fetch(url);
     let parsedData = await data.json();
-    setArticle(article.concat(parsedData.articles));
-    setTotalResults(parsedData.totalResults);
+    setArticle(article.concat(parsedData.data));
+    setTotalResults(parsedData.total);
   };
 
   return (
@@ -72,12 +67,12 @@ export default function News(props) {
             return (
               <div className="col-md-4 my-3" key={element.url}>
                 <NewsItems
-                  imgUrl={element.urlToImage}
+                  imgUrl={element.image}
                   title={element.title}
                   description={element.description}
                   newsurl={element.url}
                   author={element.author === null ? "Unknown" : element.author}
-                  date={element.publishedAt}
+                  date={element.published_at}
                 />
               </div>
             );

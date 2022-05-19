@@ -16,7 +16,6 @@ export default function App() {
           <Route exact path="/" element ={<News setProgress={setProgress} key='Home' title='Home' country='in' category='general'/>}/>
           <Route exact path="/business" element={<News setProgress={setProgress} key='Business' title='Business' country='in' category='business'/>}/>
           <Route exact path="/entertainment" element={<News setProgress={setProgress} key='Entertainment' title='Entertainment' country='in' category='entertainment'/>}/>
-          {/* <Route exact path="/environment" element={<News setProgress={setProgress} key='Environment' title='Environment' country='in' category='environment'/>}/> */}
           <Route exact path="/general" element={<News setProgress={setProgress} key='General' title='General' country='in' category='general'/>}/>
           <Route exact path="/health" element={<News setProgress={setProgress} key='Health' title='Health' country='in' category='health'/>}/>
           <Route exact path="/science" element={<News setProgress={setProgress} key='Science' title='Science' country='in' category='science'/>}/>
